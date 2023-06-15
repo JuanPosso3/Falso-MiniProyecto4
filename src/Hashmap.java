@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class Hashmap {
     public static void main(String[] args){
