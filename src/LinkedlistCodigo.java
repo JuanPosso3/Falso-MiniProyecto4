@@ -1,28 +1,74 @@
-import java.util.LinkedList;
-import java.util.Scanner;
-
-class LinkedlistCodigo
+import java.util.*;
+class texto
 {
-	public static void main(String[] args){
-        String palabra= "loco";
-        Scanner scanner = new Scanner(System.in);
-        
-        System.out.print("Ingresa un carácter: ");
-        char letra = scanner.next().charAt(0);
-        letra=Character.toLowerCase(letra);
-        LinkedList<Integer> ocurrencias= new LinkedList<>();
+    LinkedList<Integer> letras = new LinkedList<>();
 
-        for (int i=0; i<palabra.length(); i++){
-            if (palabra.charAt(i)==letra){
-                ocurrencias.add(i);
+    public static String palabra;
+    public static char letra;
+    
+    int letraEvaluadaConvertida=Character.codePointAt(Character.toString(letra), 0);
+    int numeroLetras=palabra.length();
+
+	texto(int numeroLetras)
+	{
+		this.numeroLetras=numeroLetras;
+        
+        for (int i = 0; i < numeroLetras; i++) {
+            int letraConvertida=Character.codePointAt(Character.toString(palabra.charAt(i)), 0);
+            letras.add(letraConvertida);
+        }
+        
+}
+    void busqueda(){
+        LinkedList<Integer> posciones = new LinkedList<Integer>();
+        ListIterator<Integer> iterator = letras.listIterator();
+
+        int i=0;
+        int j=0;
+        while(iterator.hasNext()){
+            if (iterator.next()==letraEvaluadaConvertida){
+                posciones.add(i);
             }
+            i++;
+
         }
-        if (!ocurrencias.isEmpty()){
-            System.out.println("Contando 0 como primer posicion\nLa posicion de la primera ocurrencia de '"+letra+"' es "+ocurrencias.getFirst());
-            System.out.println("La posicion de la ultima ocurrencia de '"+letra+"' es "+ocurrencias.getLast());
-        }else{
-            System.out.println("La letra no se encuentra en la palabra");
+        int tamaño = posciones.size();
+        if (posciones.isEmpty()){
+            System.out.println("La letra no fue encontrada en el texto o palabra proporcionado");
         }
-        scanner.close();
-    }
+        while(!posciones.isEmpty())
+		{
+            j++;
+			int x=posciones.poll();
+            if (j==1){
+                System.out.println("Contando normalmente las posiciones empezando desde 1 como primera posicion");
+                System.out.println("La primera ocurrencia de la letra '"+letra+"' esta en la posicion ["+(x+1)+"]");
+            }else if (j==tamaño){
+                System.out.println("La ultima ocurrencia de la letra '"+letra+"' esta en la posicion ["+(x+1)+"]");
+            }
+		}
+    }   
+
+	public static void main(String[] args)
+		{
+
+
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Ingrese una cadena de caracteres: ");
+            palabra = scanner.nextLine();
+            palabra=palabra.toLowerCase();
+
+            System.out.print("Ingrese un carácter: ");
+            String input = scanner.nextLine();
+            letra = input.charAt(0);
+            letra=Character.toLowerCase(letra);
+            
+
+            int numeroLetras=palabra.length();
+			texto g=new texto(numeroLetras);
+            g.busqueda();
+            scanner.close();
+
+		}
 }
